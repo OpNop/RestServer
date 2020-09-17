@@ -514,7 +514,9 @@ class RestServer {
 	public function getMime() {
 		$mime = $this->mimeDefault;
 		if (!empty($_SERVER["CONTENT_TYPE"])) {
-			$mime = strtolower(trim($_SERVER["CONTENT_TYPE"]));
+			//Split on ; support for axios application/json;charset=UTF-8
+			$contentType = explode(";", $_SERVER["CONTENT_TYPE"]);
+			$mime = strtolower(trim($contentType[0]));
 		}
 		return $mime;
 	}
